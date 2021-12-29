@@ -1,6 +1,9 @@
 package tree_node
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // Postcondition: Return value is the tree node with target value, if it cannot
 //      find any node with matching value then return NULL.
@@ -150,5 +153,48 @@ func TreePrint(root *TreeNode, depth int) {
 		TreePrint(root.right, depth+1)                  // Print right sub-tree
 		fmt.Printf("%*s[%d]\n", 4*depth, "", root.item) // Print current root
 		TreePrint(root.left, depth+1)                   // Print left sub-tree
+	}
+}
+
+// =================================
+// Traversal
+// =================================
+
+func InOrder(root *TreeNode, out *os.File) {
+	if root == nil {
+		return
+	}
+
+	InOrder(root.left, out)
+	_, err := out.Write([]byte(fmt.Sprintf("%4d", root.item)))
+	if err != nil {
+		panic(err)
+	}
+	InOrder(root.right, out)
+}
+
+func PreOrder(root *TreeNode, out *os.File) {
+	if root == nil {
+		return
+	}
+
+	_, err := out.Write([]byte(fmt.Sprintf("%4d", root.item)))
+	if err != nil {
+		panic(err)
+	}
+	PreOrder(root.left, out)
+	PreOrder(root.right, out)
+}
+
+func PostOrder(root *TreeNode, out *os.File) {
+	if root == nil {
+		return
+	}
+
+	PostOrder(root.left, out)
+	PostOrder(root.right, out)
+	_, err := out.Write([]byte(fmt.Sprintf("%4d", root.item)))
+	if err != nil {
+		panic(err)
 	}
 }
