@@ -22,7 +22,7 @@ func TreeSearch(root *TreeNode, target int) *TreeNode {
 
 // Postcondition: Insert the given value to correct place in BST
 func TreeInsert(root **TreeNode, insertMe int) {
-	if root == nil { // Base case
+	if *root == nil { // Base case
 		*root = NewTreeNode(insertMe, nil, nil)
 	} else if insertMe < (*root).item { // Move to left sub-tree
 		TreeInsert(&(*root).left, insertMe)
@@ -63,14 +63,14 @@ func HeightHelper(root **TreeNode) {
 // Postcondition: Delete the given target from BST object. If cannot find
 //      target then return false and do nothing to BST. Otherwise, delete
 //      the target tree node, and adjust the BST object accordingly.
-func TreeErase(root **TreeNode, target *int) bool {
+func TreeErase(root **TreeNode, target int) bool {
 	if *root == nil { // Base case
 		return false
 	}
 
 	defer HeightHelper(root) // Update tree height
 
-	if *target == (*root).item { // Case 4: Found the target tree node
+	if target == (*root).item { // Case 4: Found the target tree node
 		if (*root).left == nil { // Case 4.a: Root has no left sub-tree,
 			*root = (*root).right // bypass root and connect the right child
 		} else { // Case 4.b: Target has a left child: Replace target with left child's
@@ -78,7 +78,7 @@ func TreeErase(root **TreeNode, target *int) bool {
 		} // rightmost child from left sub-tree.
 
 		return true
-	} else if *target < (*root).item { // Recursive step: Search left sub-tree
+	} else if target < (*root).item { // Recursive step: Search left sub-tree
 		return TreeErase(&(*root).left, target)
 	}
 
