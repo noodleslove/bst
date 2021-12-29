@@ -28,7 +28,7 @@ type TreeNode struct {
 }
 
 func NewTreeNode(item int, left *TreeNode, right *TreeNode) *TreeNode {
-	p := TreeNode{item: item, left: nil, right: nil, height: 0}
+	p := TreeNode{item: item, left: left, right: right, height: 0}
 	p.UpdateHeight()
 	return &p
 }
