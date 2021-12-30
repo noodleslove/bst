@@ -198,3 +198,27 @@ func PostOrder(root *TreeNode, out *os.File) {
 		panic(err)
 	}
 }
+
+func InOrderString(root *TreeNode) string {
+	if root == nil {
+		return ""
+	}
+
+	return InOrderString(root.left) + fmt.Sprintf("[%d]", root.item) + InOrderString(root.right)
+}
+
+func PreOrderString(root *TreeNode) string {
+	if root == nil {
+		return ""
+	}
+
+	return fmt.Sprintf("[%d]", root.item) + PreOrderString(root.left) + PreOrderString(root.right)
+}
+
+func PostOrderString(root *TreeNode) string {
+	if root == nil {
+		return ""
+	}
+
+	return PostOrderString(root.left) + PostOrderString(root.right) + fmt.Sprintf("[%d]", root.item)
+}
